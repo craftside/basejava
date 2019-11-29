@@ -33,31 +33,26 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        boolean deleted = false;
         int i = -1;
-
-        while ((i <= pos) && (!deleted)) {
+        while (i <= pos) {
             i++;
             if (storage[i].uuid.equals(uuid)) {
-                deleted = true;
                 drift2Left(i);
+                break;
             }
         }
     }
 
-    private void drift2Left(int removedId) {
-        System.arraycopy(storage, removedId + 1, storage, removedId, pos - removedId);
+    private void drift2Left(int index) {
+        System.arraycopy(storage, index + 1, storage, index, pos - index);
         storage[pos] = null;
-        pos = pos - 1;
+        pos--;
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        if (pos == -1) {
-            return new Resume[0];
-        }
         return Arrays.copyOfRange(storage, 0, pos + 1);
     }
 
